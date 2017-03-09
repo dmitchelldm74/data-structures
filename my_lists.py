@@ -120,9 +120,15 @@ class LinkedList:
 
     def __repr__(self):
         if self._value is None:
-            return "()"
+            return "{}"
         else:
-            return "(%r, %r)" % (self._value, self._next_item)
-
+            return "{%r, %s}" % (self._value, self._next_item._repr())
+            
+    def _repr(self):
+        if self._value is None:
+            return ""
+        else:
+            return "%r, %s" % (self._value, self._next_item._repr())
+            
     # Other methods to consider:
     #   pop, index, remove, reverse

@@ -8,7 +8,7 @@ def test_append():
     ll.append(3)
     ll.append(1)
 
-    assert repr(ll) == '(5, (3, (1, ())))'
+    assert repr(ll) == '{5, 3, 1, }'
     
     
 def test_prepend():
@@ -17,14 +17,14 @@ def test_prepend():
     ll.prepend(3)
     ll.prepend(1)
     
-    assert repr(ll) == '(1, (3, (5, ())))'
+    assert repr(ll) == '{1, 3, 5, }'
     
 
 def test_dump():
     ll = LinkedList()
     ll.dump(5,3,1)
     
-    assert repr(ll) == '(5, (3, (1, ())))'
+    assert repr(ll) == '{5, 3, 1, }'
 
 
 def test_len():
