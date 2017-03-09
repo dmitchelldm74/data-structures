@@ -1,0 +1,7 @@
+@15
+    def __len__(self):
+        if self._value == None:
+            return 0
+        else:
+            return 1 + len(self._next_item)
+==END>>
