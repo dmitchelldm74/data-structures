@@ -146,5 +146,20 @@ class LinkedList:
         else:
             return "%r, %s" % (self._value, self._next_item._repr())
             
+    def __iter__(self):
+        self._iter_next_item = self
+        return self
+        
+    def __next__(self):
+        return self.next()
+        
+    def next(self):
+        if self._iter_next_item._value != None:
+            val = self._iter_next_item._value
+            self._iter_next_item = self._iter_next_item._next_item
+            return val
+        else:
+            raise StopIteration
+            
     # Other methods to consider:
     #   pop, index, remove, reverse

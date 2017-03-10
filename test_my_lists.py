@@ -183,6 +183,7 @@ def test_count():
     assert ll.count(1) == 2
     assert ll.count(5) == 3
     
+    
 def test_eq():
     ll = LinkedList()
     ll.dump(5,4,3,2,1)
@@ -191,6 +192,7 @@ def test_eq():
     ll2.dump(5,4,3,2,1)
     
     assert ll == ll2
+    
     
 def test_add():
     ll = LinkedList()
@@ -204,4 +206,16 @@ def test_add():
     
     assert repr(ll+ll2) == repr(ll3)
     assert repr(ll+ll) == repr(ll3)
+    
+    
+def test_iter():
+    ll = LinkedList()
+    ll.dump(5,4,3,2,1)
+    
+    ll2 = LinkedList()
+    
+    for l in ll:
+        ll2.append(l)
+        
+    assert ll == ll2
     
