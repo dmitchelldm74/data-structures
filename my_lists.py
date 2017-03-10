@@ -16,7 +16,15 @@ class LinkedList:
         else:
             self._next_item.append(val)
             
-    def extend(self,linkedlist):
+    def extend(self,extension):
+        if self._next_item._value == None:
+            self._next_item = extension
+        elif isinstance(extension, LinkedList):
+            self._next_item.extend(extension)
+        else:
+            self._extend_from_iteratable_object(extension)
+            
+    def _extend_from_iteratable_object(self,iter_object):
         for l in linkedlist:
             self.append(l)
             
@@ -29,21 +37,29 @@ class LinkedList:
             return 0
         else:
             return 1 + len(self._next_item)
+            
+    def __add__(self, other):
+        new = LinkedList()
+        for i in self:
+            if new != None:
+                new.append(i)
+        new.extend(other)
+        return new
 
     def __getitem__(self, index):
-        if index == 0:
+        if index == 0 and self._value != None:
             return self._value
         elif self._next_item != None:
             return self._next_item[index-1]
-        raise IndexError("Index %r not in 'LinkedList'"%(index))
+        raise IndexError # ("Index %r not in 'LinkedList'"%(index))
         
     def __setitem__(self, index, val):
         if index == 0:
             self._value = val
         elif self._next_item != None:
-            self._next_item.insert(index-1,val)
+            self._next_item[index-1] = val
         else:
-            raise IndexError("Index %r not in 'LinkedList'"%(index))
+            raise IndexError # ("Index %r not in 'LinkedList'"%(index))
             
     def __delitem__(self, index):
         self.pop(index)
@@ -58,7 +74,7 @@ class LinkedList:
         elif self._next_item != None:
             self._next_item.insert(index-1,val)
         else:
-            raise IndexError("Index %r not in 'LinkedList'"%(index))
+            raise IndexError # ("Index %r not in 'LinkedList'"%(index))
                 
     def pop(self,index=None):
         if index == None:
@@ -72,7 +88,7 @@ class LinkedList:
             return value
         elif self._next_item != None:
             return self._next_item._pop(index-1)
-        raise IndexError("Index %r not in 'LinkedList'"%(index))
+        raise IndexError # ("Index %r not in 'LinkedList'"%(index))
         
     def remove(self,equivalent): 
         if self._next_item != None:

@@ -50,6 +50,9 @@ def test_indexerror_getitem():
     with pytest.raises(IndexError):
         ll[234]
         
+    with pytest.raises(IndexError):
+        ll[3]
+        
         
 def test_pop():
     ll = LinkedList()
@@ -179,3 +182,26 @@ def test_count():
     
     assert ll.count(1) == 2
     assert ll.count(5) == 3
+    
+def test_eq():
+    ll = LinkedList()
+    ll.dump(5,4,3,2,1)
+    
+    ll2 = LinkedList()
+    ll2.dump(5,4,3,2,1)
+    
+    assert ll == ll2
+    
+def test_add():
+    ll = LinkedList()
+    ll.dump(5,4,3,2,1)
+    
+    ll2 = LinkedList()
+    ll2.dump(5,4,3,2,1)
+    
+    ll3 = LinkedList()
+    ll3.dump(5,4,3,2,1,5,4,3,2,1)
+    
+    assert repr(ll+ll2) == repr(ll3)
+    assert repr(ll+ll) == repr(ll3)
+    
