@@ -219,3 +219,36 @@ def test_iter():
         
     assert ll == ll2
     
+
+def test_swap():
+    ll = LinkedList()
+    ll.dump(5,4,3,2,1)
+    
+    ll.swap(0,4)
+    ll.swap(1,3)
+    
+    assert ll[0] == 1
+    assert ll[4] == 5
+    assert ll[1] == 2
+    assert ll[3] == 4
+    
+
+def test_sort():
+    ll = LinkedList()
+    ll.dump(5,2,1,4,3)
+    
+    ll2 = LinkedList()
+    ll2.dump(1,2,3,4,5)
+    
+    ll3 = LinkedList()
+    ll3.dump(5,2,1,4,3)
+    
+    ll4 = LinkedList()
+    ll4.dump(5,4,3,2,1)
+    
+    ll.sort()
+    ll3.sort(reverse=True)
+    
+    assert repr(ll) == repr(ll2)
+    assert repr(ll3) == repr(ll4)
+    

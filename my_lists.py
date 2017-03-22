@@ -1,3 +1,4 @@
+import random
 
 class LinkedList:
 
@@ -23,6 +24,9 @@ class LinkedList:
             self._next_item.extend(extension)
         else:
             self._extend_from_iteratable_object(extension)
+            
+    def swap(self,index1,index2):
+        self[index1], self[index2] = self[index2], self[index1]
             
     def _extend_from_iteratable_object(self,iter_object):
         for l in linkedlist:
@@ -52,6 +56,13 @@ class LinkedList:
         elif self._next_item != None:
             return self._next_item[index-1]
         raise IndexError # ("Index %r not in 'LinkedList'"%(index))
+        
+    def get(self, index):
+        if index == 0 and self._value != None:
+            return self
+        elif self._next_item != None:
+            return self._next_item.get(index-1)
+        raise IndexError
         
     def __setitem__(self, index, val):
         if index == 0:
@@ -160,6 +171,20 @@ class LinkedList:
             return val
         else:
             raise StopIteration
+            
+    def sort(self,reverse=False,bubble=True):
+        if bubble:
+            self._bubblesort(reverse=reverse)
+    
+    def _bubblesort(self,reverse=False):
+        for num in range(len(self)-1,0,-1):
+            for i in range(num):
+                if ((not reverse) and self[i] > self[i+1]) or (reverse and self[i] < self[i+1]):
+                    self.swap(i,i+1)
+    
+    def jumble(self):
+        random.shuffle(self)
+        return self
             
     # Other methods to consider:
     #   pop, index, remove, reverse
