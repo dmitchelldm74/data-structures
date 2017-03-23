@@ -43,19 +43,28 @@ class LinkedList:
             return 1 + len(self._next_item)
             
     def __add__(self, other):
-        new = LinkedList()
-        for i in self:
-            if new != None:
-                new.append(i)
-        new.extend(other)
-        return new
+        #if other._next_item != None:
+            new = LinkedList()
+            for i in self:
+                if new != None:
+                    new.append(i)            
+            new.extend(other)
+            return new
+        #return self
 
     def __getitem__(self, index):
-        if index == 0 and self._value != None:
-            return self._value
-        elif self._next_item != None:
-            return self._next_item[index-1]
-        raise IndexError # ("Index %r not in 'LinkedList'"%(index))
+        if isinstance(index,slice):
+            stop = index.stop
+            length = len(self)
+            if stop > length or stop == None:
+                stop = length
+            step = index.step
+            step = step if step != None else 1
+            start = index.start
+            start = start if start != None else 0
+            return self._slice(start,stop,step)
+        else:
+            return self.get(index)._value
         
     def get(self, index):
         if index == 0 and self._value != None:
@@ -63,6 +72,12 @@ class LinkedList:
         elif self._next_item != None:
             return self._next_item.get(index-1)
         raise IndexError
+        
+    def _slice(self,start,stop,step):
+        ll = LinkedList()
+        for x in range(start,stop,step):
+            ll.append(self[x])
+        return ll
         
     def __setitem__(self, index, val):
         if index == 0:
@@ -118,6 +133,9 @@ class LinkedList:
             if x != None:
                 reversed_list.prepend(x)
         return reversed_list
+        
+    def update(self,linkedlist):
+        self.__init__(linkedlist._value, linkedlist._next_item)
             
     def index(self,equivalent,i=0):
         if self._next_item != None:
@@ -165,22 +183,40 @@ class LinkedList:
         return self.next()
         
     def next(self):
-        if self._iter_next_item._value != None:
+        if self._iter_next_item != None and self._iter_next_item._value != None:
             val = self._iter_next_item._value
             self._iter_next_item = self._iter_next_item._next_item
             return val
         else:
             raise StopIteration
             
-    def sort(self,reverse=False,bubble=True):
+    def sort(self,reverse=False,bubble=False):
         if bubble:
             self._bubblesort(reverse=reverse)
+        li = self._quicksort(self)
+        if reverse == True:
+            li = li.reverse()
+        self.update(li)
+        
     
     def _bubblesort(self,reverse=False):
         for num in range(len(self)-1,0,-1):
             for i in range(num):
                 if ((not reverse) and self[i] > self[i+1]) or (reverse and self[i] < self[i+1]):
                     self.swap(i,i+1)
+                    
+    def _quicksort(self,li): # li for list
+        if len(li) < 2:
+            return li
+        else:
+            p = li[0]
+            less, greater = LinkedList(), LinkedList()
+            for i in li[1:]:
+                if i <= p:
+                    less.append(i)
+                elif i > p:
+                    greater.append(i)
+            return self._quicksort(less) + LinkedList(p) + self._quicksort(greater)
     
     def jumble(self):
         random.shuffle(self)
