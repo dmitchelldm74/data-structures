@@ -56,7 +56,7 @@ class LinkedList:
         if isinstance(index,slice):
             stop = index.stop
             length = len(self)
-            if stop > length or stop == None:
+            if stop == None or stop > length:
                 stop = length
             step = index.step
             step = step if step != None else 1
@@ -183,7 +183,7 @@ class LinkedList:
         return self.next()
         
     def next(self):
-        if self._iter_next_item != None and self._iter_next_item._value != None:
+        if isinstance(self._iter_next_item, LinkedList) and self._iter_next_item._value != None:
             val = self._iter_next_item._value
             self._iter_next_item = self._iter_next_item._next_item
             return val
